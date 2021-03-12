@@ -1,13 +1,12 @@
 import os, discord
 from dotenv import load_dotenv
 from random import choice
-from discord.ext import commands, tasks
-from discord import *
+from discord.ext import tasks
+
+from settings import client
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
-
-client = commands.Bot(command_prefix='.')
 
 status = ['Jamming out to music!', 'Eating!', 'Sleeping!']
 
@@ -34,7 +33,7 @@ async def on_ready():
 #         await message.channel.purge(limit=1)
 
 
-@client.command(name='linkk')
+@client.command(name='link')
 async def link(ctx):
     await ctx.send('https://discord.com/oauth2/authorize?client_id=812988652586139688&permissions=8&scope=bot')
 
