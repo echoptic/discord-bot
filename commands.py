@@ -1,4 +1,5 @@
 from settings import client
+import discord
 
 @client.command(name='link')
 async def link(ctx):
@@ -8,12 +9,14 @@ async def link(ctx):
 async def ping(ctx):
     await ctx.send(f'Latency: {round(client.latency * 1000)}ms')
 
-@client.command(name='clear')
-async def clear(ctx, amount=2):
-    await ctx.channel.purge(limit=amount)
+@client.command(pass_context=True)
+async def nick(ctx, member: discord.Member, nick):
+    await member.edit(nick=nick)
+    # await ctx.send(f'Nickname was changed for {member.mention} ')
 
-@client.command(name='invite')
-async def invite(ctx):
-    """Create instant invite"""
-    link = await ctx.channel.create_invite(max_age = 300)
-    await ctx.send("Here is an instant invite to your server: " + link)
+
+#admin only commands
+@client.command(name='klir')
+async def clear(ctx, amount=2):
+    if ctx.author.guild_permissions.administrator:
+        await ctx.channel.purge(limit=amount)
